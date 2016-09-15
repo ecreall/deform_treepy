@@ -7,3 +7,26 @@ deform_treepy
 ============
 
 deform_treepy is a deform widget for inputting a tree of words.
+
+Installation
+------------
+
+Add `deform_treepy` in `install_requires` in your `setup.py`.
+and edit `production.ini` in your Pyramid application to add::
+
+    pyramid.includes =
+        ...
+        deform_treepy
+
+
+Contribute
+----------
+
+- Issue Tracker: https://github.com/ecreall/deform_treepy/issues
+- Source Code: https://github.com/ecreall/deform_treepy
+
+
+License
+-------
+
+The project is licensed under the AGPLv3+.
