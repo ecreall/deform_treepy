@@ -4,7 +4,7 @@ Changelog
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix README and setup.cfg for translations.
 
 
 1.0 (2016-09-15)
