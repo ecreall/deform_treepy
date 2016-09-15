@@ -2,9 +2,9 @@
    If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide_addons.html
    This text does not appear on pypi or github. It is a comment.
 
-============
+=============
 deform_treepy
-============
+=============
 
 deform_treepy is a deform widget for inputting a tree of words.
 
