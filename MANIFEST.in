@@ -1,0 +1,6 @@
+include *.rst
+include LICENSE
+recursive-include deform_treepy *.po
+recursive-include deform_treepy *.mo
+recursive-include deform_treepy *.pot
+recursive-include deform_treepy *.pt
