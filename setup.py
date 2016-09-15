@@ -14,7 +14,7 @@ testing_extras = ['nose', 'coverage', 'beautifulsoup4']
 
 setupkw = dict(
     name='deform_treepy',
-    version='1.0.1.dev0',
+    version='1.0.1',
     description='A tree widget for deform',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
