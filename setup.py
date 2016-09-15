@@ -1,47 +1,35 @@
 import os
 
-from setuptools import setup
-from setuptools import find_packages
+from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
-
-try:
-    with open(os.path.join(here, 'README.txt')) as f:
-        README = f.read()
-    with open(os.path.join(here, 'CHANGES.txt')) as f:
-        CHANGES = f.read()
-except:
-    README = ''
-    CHANGES = ''
+README = open(os.path.join(here, 'README.rst')).read()
+CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
     'deform'
     ]
 
 testing_extras = ['nose', 'coverage', 'beautifulsoup4']
-docs_extras = ['Sphinx']
 
 setupkw = dict(
     name='deform_treepy',
-    version='0.1',
+    version='1.0.1.dev0',
     description='A tree widget for deform',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
-        "Intended Audience :: Developers",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.2",
-        "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: Python :: Implementation :: PyPy",
+        "Framework :: Pyramid",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
         ],
-    keywords='web forms form tree widget',
-    author="Amen SOUISSI",
+    author='Amen Souissi',
     author_email="amensouissi@ecreall.com",
-    url="",
+    url='https://github.com/ecreall/deform_treepy/',
+    keywords='web forms form tree widget',
+    license="AGPLv3+",
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
@@ -50,7 +38,6 @@ setupkw = dict(
     test_suite="deform_treepy",
     extras_require = {
         'testing':testing_extras,
-        'docs':docs_extras,
         },
     )
 
