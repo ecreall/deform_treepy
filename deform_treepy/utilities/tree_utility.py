@@ -150,12 +150,19 @@ def node_to_keywords(node_name, children, source):
     return result, path
 
 
-def tree_to_keywords(tree):
+def tree_to_keywords(tree, include_path=True):
     result = []
     for node in tree:
         node_keywords, node_path = node_to_keywords(node, tree[node], None)
         result.extend(node_keywords)
         result.extend(node_path)
+
+    if not include_path:
+        flattened_result = []
+        for node in result:
+            flattened_result.extend(node.split('/'))
+
+        result = flattened_result
 
     return list(set(result))
 
