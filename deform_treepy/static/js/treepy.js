@@ -9,6 +9,15 @@ serializers = {
     'selection_mode': serialize_tree_selection
 }
 
+function sortOnKeys(dict) {
+    var keys = Object.keys(dict)
+    keys.sort();
+    var sorted_dict = {};
+    for(var i = 0; i < keys.length; i++) {
+        sorted_dict[keys[i]] = dict[keys[i]];
+    }
+    return sorted_dict;
+}
 
 function get_node_id(node){
   var obj = $(node.parents('li.jstree-node').children('a.jstree-anchor'));
@@ -138,6 +147,7 @@ function edit(inst, obj, default_text) {
 
 function serialize_node(node_name, node_children, type){
   var children = [];
+  node_children = sortOnKeys(node_children)
   for(n in node_children){
         children.push(serialize_node(n, node_children[n], 'default'))
   };
@@ -157,6 +167,7 @@ function serialize_tree_create(tree_string){
       return [];
   };
   var children = [];
+  tree = sortOnKeys(tree)
   for(n in tree){
       children.push(serialize_node(n, tree[n], 'root'))
   };
@@ -181,6 +192,7 @@ function get_diff_node(node_name, subnode, subtree, diff_marker){
 
 function serialize_node_diff(node_name, node_children, type, is_diff, diff_tree, diff_marker){
   var children = [];
+  node_children = sortOnKeys(node_children)
   for(var n in node_children){
         var diff_node = get_diff_node(n, node_children[n], diff_tree, diff_marker);
         children.push(serialize_node_diff(n, node_children[n], 'default',
@@ -219,6 +231,7 @@ function serialize_tree_diff(tree_string, diff_tree_str, diff_marker){
   };
 
   var children = [];
+  tree = sortOnKeys(tree)
   for(var start_n in tree){
       var diff_node = get_diff_node(start_n, tree[start_n], diff_tree, diff_marker);
       children.push(serialize_node_diff(start_n, tree[start_n], 'root',
@@ -243,6 +256,7 @@ function get_selected_node(node_name, subnode, subtree){
 
 function serialize_node_selection(node_name, node_children, type, is_selected, selection_tree){
   var children = [];
+  node_children = sortOnKeys(node_children)
   for(var n in node_children){
         var selected = get_selected_node(n, node_children[n], selection_tree);
         children.push(serialize_node_selection(n, node_children[n], 'default',
@@ -281,6 +295,7 @@ function serialize_tree_selection(tree_string, selection_tree_str){
   };
 
   var children = [];
+  tree = sortOnKeys(tree)
   for(var start_n in tree){
       var selected = get_selected_node(start_n, tree[start_n], selection_tree);
       children.push(serialize_node_selection(start_n, tree[start_n], 'root',
