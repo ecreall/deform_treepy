@@ -44,6 +44,7 @@ function init_keyword_values_tree(parent, tree_container, select_field, level){
         select_field.select2({containerCssClass: 'form-control'})
      };
      $(tree_container.find('.select2.select2-container')).css('width', '152px');
+     values.sort()
      for (i=0; i<values.length; i++){
      	if($(select_field).find("option[value=\""+values[i]+"\"]").length == 0){
             select_field.append("<option value=\""+values[i]+"\">"+values[i]+"</option>");
@@ -130,6 +131,7 @@ function edit(inst, obj, default_text) {
          };
          $(h2).select2({tokenSeparators: [","],
                containerCssClass: 'form-control',
+               customClass: "tree-item-select",
                tags: true});
 
          init_keyword_values_tree($(obj.parents('.jstree-node').first().find('.jstree-anchor').first()),
@@ -354,6 +356,8 @@ function deserialize_tree_selection(objects, tree_tag){
 
 function create_tree(oid){
 	  var default_keywords_field = $('#'+oid);
+    var can_rename = default_keywords_field.data('can_rename')
+    can_rename = can_rename==undefined? true: can_rename
     var default_keywords = default_keywords_field.val();
     var input_tree = serializers.create_mode(default_keywords);
     var keywords_tree = input_tree;
@@ -398,12 +402,16 @@ function create_tree(oid){
                              setTimeout(function () { edit(inst, new_node); },0);
                         });
                };
-         tmp.rename.action = function (data) {
-                  var inst = $.jstree.reference(data.reference),
-                      obj = inst.get_node(data.reference);
-                  edit(inst, obj);
-               };
-         tmp.rename.label = treepy_translate("Rename");
+         if(can_rename){
+           tmp.rename.action = function (data) {
+                    var inst = $.jstree.reference(data.reference),
+                        obj = inst.get_node(data.reference);
+                    edit(inst, obj);
+                 };
+           tmp.rename.label = treepy_translate("Rename");
+         }else{
+             delete tmp.rename;
+         }
          tmp.remove.label = treepy_translate("Remove");
          if(this.get_type(node) === "default"){
          	var inst = $.jstree.reference(node),
@@ -538,7 +546,10 @@ function read_trees(source){
 $(document).ready(function(){
   read_trees();
 	 $(document).click(function(event){
-	 	if($(event.target).find(".vakata-contextmenu-sep").length === 0){
+    var target = $(event.target)
+    var is_select = target.parents('.select2-container--open').length > 0
+    var is_tree = $(event.target).find(".vakata-contextmenu-sep").length > 0
+	 	if(!is_select & !is_tree){
 	 	    $('.jstree-anchor select').trigger("change");
 	 	};
 

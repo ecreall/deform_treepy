@@ -9,7 +9,8 @@
                   can_create getattr(field.widget, 'can_create', 2);
                   min_len getattr(field.widget, 'min_len', 1);
                   max_len getattr(field.widget, 'max_len', 1);
-                  source_tree getattr(field.widget, 'source_tree', '')"
+                  source_tree getattr(field.widget, 'source_tree', '');
+                  can_rename getattr(field.widget, 'can_rename', True)"
       tal:omit-tag="">
   <div class="tree-container">
     <div class="keyword-data hide-bloc" data-target="${oid}" data-min-len="${min_len}" data-max-len="${max_len}">
@@ -29,7 +30,8 @@
            id="${oid}"
            placeholder="${placeholder}"
            data-source_tree="${source_tree}"
-           data-selection_mode="${source_tree != '' and 1 or 0}"/>
+           data-selection_mode="${source_tree != '' and 1 or 0}"
+           data-can_rename="${can_rename and 'true' or 'false'}"/>
     <script type="text/javascript">
       deform.addCallback(
          '${oid}',
