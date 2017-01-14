@@ -150,7 +150,7 @@ function edit(inst, obj, default_text) {
 function serialize_node(node_name, node_children, type){
   var children = [];
   node_children = sortOnKeys(node_children)
-  for(n in node_children){
+  for(var n in node_children){
         children.push(serialize_node(n, node_children[n], 'default'))
   };
     var result = {"text": node_name, "type": type, "children":children, 'state' : {
@@ -170,7 +170,7 @@ function serialize_tree_create(tree_string){
   };
   var children = [];
   tree = sortOnKeys(tree)
-  for(n in tree){
+  for(var n in tree){
       children.push(serialize_node(n, tree[n], 'root'))
   };
   return children
@@ -310,47 +310,47 @@ function serialize_tree_selection(tree_string, selection_tree_str){
 function deserialize_node(node){
   var children = [],
       node_name = node.text;
-  for(subnode in node.children){
-        children.push(deserialize_node(node.children[subnode]))
-  };
-    var result = '\"'+node_name+'\": {'+children.join(',')+'}';
-    return result
+  $.each(node.children, function(subnode){
+    children.push(deserialize_node(node.children[subnode]))
+  });
+  var result = '\"'+node_name+'\": {'+children.join(',')+'}';
+  return result
 }
 
 
 function deserialize_tree_create(objects){
 	var children = [];
-	for(start_n in objects){
-        children.push(deserialize_node(objects[start_n]))
-	};
-   return '{'+children.join(',')+'}'
+  $.each(objects, function(start_n){
+    children.push(deserialize_node(objects[start_n]))
+  });
+  return '{'+children.join(',')+'}'
 };
 
 
 function deserialize_node_selection(node, tree_tag){
   var children = [],
       node_name = node.text;
-  for(subnode in node.children){
-        var object = node.children[subnode];
-        var is_selected = $(tree_tag).find('#'+object.id+' a.jstree-checked').length > 0 || object.state.checked;
-        if (is_selected){
-          children.push(deserialize_node_selection(object, tree_tag))
-        }
-  };
-    var result = '\"'+node_name+'\": {'+children.join(',')+'}';
-    return result
+  $.each(node.children, function(subnode){
+    var object = node.children[subnode];
+    var is_selected = $(tree_tag).find('#'+object.id+' a.jstree-checked').length > 0 || object.state.checked;
+    if (is_selected){
+      children.push(deserialize_node_selection(object, tree_tag))
+    }
+  });
+  var result = '\"'+node_name+'\": {'+children.join(',')+'}';
+  return result
 }
 
 function deserialize_tree_selection(objects, tree_tag){
   var children = [];
-  for(start_n in objects){
-        var object = objects[start_n];
-        var is_selected = $(tree_tag).find('#'+object.id+' a.jstree-checked').length > 0 || object.state.checked;
-        if (is_selected){
-            children.push(deserialize_node_selection(object, tree_tag))
-        }
-  };
-   return '{'+children.join(',')+'}'
+  $.each(objects, function(start_n){
+    var object = objects[start_n];
+    var is_selected = $(tree_tag).find('#'+object.id+' a.jstree-checked').length > 0 || object.state.checked;
+    if (is_selected){
+        children.push(deserialize_node_selection(object, tree_tag))
+    }
+  });
+  return '{'+children.join(',')+'}'
 };
 
 
